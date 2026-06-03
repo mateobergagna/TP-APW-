@@ -1,0 +1,25 @@
+/// Crear la imagen de la Base de Datos
+docker build -t imagen_3dmatt_pg .
+
+/// Instanciar y correr el contenedor de PostgreSQL
+docker run --name contenedor_3dmatt_pg -e POSTGRES_USER=root -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=tienda -p 5432:5432 -d imagen_3dmatt_pg
+
+/// Verificar la creación de la Base de Datos y la tabla desde la terminal
+
+// Entrar al contenedor
+docker exec -it contenedor_3dmatt_pg bash
+
+// Dentro del contenedor ejecutar el cliente psql
+psql -U root -d tienda --password
+
+// Indicar la clave (por defecto 'pass')
+Password: pass
+
+// Ejecutar consulta para verificar que los datos están presentes
+tienda=# SELECT * FROM productos;
+
+// Salir de psql
+tienda=# \q
+
+// Salir del contenedor
+exit

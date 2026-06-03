@@ -1,0 +1,95 @@
+/* CONTENEDOR PRINCIPAL */
+.contenedor-servicio {
+    /* Reducimos el max-width para que el contenido no se estire demasiado en pantallas gigantes */
+    max-width: 1100px; 
+    /* El margen está bien */
+    margin: 65px auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #fff;
+    /* Reducimos el border-radius para un look más moderno y controlable */
+    border-radius: 20px; 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    overflow: hidden; /* CLAVE: Asegura que todo el contenido (incluyendo la imagen) respete el border-radius */
+}
+
+/* Imagen de la izquierda */
+.imagen-servicio {
+    /* CORRECCIÓN: Ajustamos el ancho a 40% o 45% para dar más espacio al texto */
+    width: 45%; 
+    /* CLAVE: Necesitas asegurar que la imagen ocupe la altura disponible */
+    min-height: 450px; 
+}
+
+.imagen-servicio img {
+    width: 100%;
+    /* CLAVE: Aseguramos que la imagen cubra el espacio sin deformarse y respete el border-radius */
+    object-fit: cover;
+    height: 100%;
+    /* Truco para que la esquina superior izquierda de la imagen se redondee */
+    border-radius: 20px 0 0 20px; 
+}
+
+/* Texto de la derecha */
+.texto-servicio {
+    /* CORRECCIÓN: Ajustamos el ancho para que sume 100% con la imagen */
+    width: 55%; 
+    padding: 40px;
+}
+
+.texto-servicio h1 {
+    color: #003366;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.texto-servicio p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.servicio {
+    margin-bottom: 25px;
+}
+
+.servicio h2 {
+    color: #005f99;
+    margin-bottom: 10px;
+}
+
+.servicio ul {
+    /* Eliminamos el margin-left que pusiste para usar padding */
+    padding-left: 20px; 
+    line-height: 1.5;
+    /* Usamos list-style-type para que se vean los puntos (si no están ya en global.css) */
+    list-style-type: disc;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .contenedor-servicio {
+        flex-direction: column;
+        /* Reducimos el border-radius en móvil */
+        border-radius: 12px;
+        margin: 40px 10px; /* Margen horizontal en móvil */
+    }
+
+    .imagen-servicio,
+    .texto-servicio {
+        /* Vuelven a usar el 100% del ancho */
+        width: 100%;
+        min-height: initial; /* Quitamos la altura mínima forzada */
+    }
+
+    .imagen-servicio img {
+        height: 300px;
+        /* Hacemos la imagen rectangular y redondeamos solo las esquinas superiores */
+        border-radius: 12px 12px 0 0;
+    }
+
+    .texto-servicio {
+        padding: 20px;
+    }
+}

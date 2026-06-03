@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./recursos/logo-3dmatt.png" type="image/x-icon">
+    <title>3D_MATT | Panel de Administración</title>
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/admin.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="./index.html">
+            <img class="header-logo" src="./recursos/logo-3dmatt.png" alt="logo-3dmatt">
+        </a>
+
+        <h1 class="header-title">3D_MATT</h1>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="./index.html">Inicio</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
+                <li><a href="./admin.html" class="active">Administración</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="admin-main">
+        <section class="admin-header-section">
+            <div class="title-container">
+                <h2>Panel de Administración</h2>
+                <p class="subtitle">Gestiona el catálogo de productos y servicios en tiempo real</p>
+            </div>
+            
+            <button id="btn-nuevo" class="boton-premium">
+                <span class="icon">+</span> Nuevo Producto
+            </button>
+        </section>
+
+        <!-- Tarjetas de Estadísticas (Premium) -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon bg-blue"></div>
+                <div class="stat-info">
+                    <span class="stat-label">Total Productos</span>
+                    <span id="stat-total" class="stat-value">...</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-green"></div>
+                <div class="stat-info">
+                    <span class="stat-label">Precio Promedio</span>
+                    <span id="stat-promedio" class="stat-value">$ ...</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon bg-purple"></div>
+                <div class="stat-info">
+                    <span class="stat-label">Base de Datos</span>
+                    <span id="stat-db" class="stat-value status-badge loading">Detectando...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Barra de Control -->
+        <section class="control-bar">
+            <div class="search-box">
+                <span class="search-icon"></span>
+                <input type="text" id="busqueda" placeholder="Buscar por nombre de producto...">
+            </div>
+        </section>
+
+        <!-- Listado de Productos -->
+        <section class="tabla-container">
+            <table class="tabla-admin">
+                <thead>
+                    <tr>
+                        <th width="80">ID</th>
+                        <th width="100">Imagen</th>
+                        <th>Producto / Servicio</th>
+                        <th width="180">Precio</th>
+                        <th width="180">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-productos-body">
+                    <tr>
+                        <td colspan="5" class="loading-row">
+                            <div class="loader"></div>
+                            Cargando productos del servidor...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Modal Formulario (Crear / Editar) -->
+    <div id="modal-producto" class="modal">
+        <div class="modal-content animate-zoom">
+            <div class="modal-header">
+                <h3 id="modal-titulo">Crear Nuevo Producto</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="form-producto">
+                <input type="hidden" id="form-id">
+                
+                <div class="form-group">
+                    <label for="form-nombre">Nombre del Producto *</label>
+                    <input type="text" id="form-nombre" required placeholder="Ej. Soporte para Notebook v2">
+                </div>
+
+                <div class="form-group">
+                    <label for="form-precio">Precio (ARS) *</label>
+                    <div class="input-prefix-container">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="form-precio" step="0.01" min="0" required placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="form-archivo">Imagen del Producto</label>
+                    <input type="file" id="form-archivo" name="archivo" accept="image/*">
+                    <small id="imagen-actual" style="color:#888; margin-top:4px; display:block;"></small>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secundario close-modal-btn">Cancelar</button>
+                    <button type="submit" id="btn-guardar" class="boton-premium">Guardar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirmación de Eliminación Personalizada (Premium) -->
+    <div id="modal-confirmar" class="modal">
+        <div class="modal-content delete-modal animate-zoom">
+            <div class="modal-header bg-danger">
+                <h3>¿Eliminar Producto?</h3>
+                <span class="close-confirm">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Estás a punto de eliminar el producto <strong id="delete-item-name"></strong>.</p>
+                <p class="warning-text">Esta acción no se puede deshacer y se borrará permanentemente de la base de datos.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secundario close-confirm-btn">Cancelar</button>
+                <button type="button" id="btn-confirmar-eliminar" class="btn-danger">Eliminar permanentemente</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toasts de Notificación -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <footer class="footer">
+        <ul class="footer-redes">
+            <li>
+                <a href="https://mail.google.com/" target="_blank">
+                    <img src="./recursos/email-icon (2).png" alt="email-icon">
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/3525413549" target="_blank">
+                    <img src="./recursos/whatsapp-icon (2).png" alt="whatsapp-icon">
+                </a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/3d_matt" target="_blank">
+                    <img src="./recursos/logotipo-de-instagram (2).png" alt="instagram-icon">
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+    <script type="module" src="./recursos/js/admin.js"></script>
+</body>
+
+</html>

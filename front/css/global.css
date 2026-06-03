@@ -1,0 +1,157 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #222;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+* {
+    caret-color: transparent !important;
+}
+
+/* Todo sigue siendo seleccionable, solo quitamos la barrita de escribir */
+p, span, h1, h2, h3, h4, h5, h6,
+a, li, label, div, strong, b, button {
+    cursor: default;
+    user-select: text; /* PERMITE seleccionar */
+}
+
+/* Permitir cursor normal en imágenes */
+img {
+    max-width: 100%;
+    display: block;
+    cursor: default;
+}
+
+/* ÚNICOS elementos con cursor de texto */
+input, textarea {
+    cursor: text;
+}
+
+/* LISTAS */
+ul {
+    list-style: none;
+}
+
+/* HEADER */
+.header {
+    background-color: #cfcfcf;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 40px;
+    border-bottom: 2px solid #bbb;
+}
+
+.header-logo {
+    height: 55px;
+    border-radius: 50%;
+}
+
+.header-title {
+    color: #1c2d66;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* NAVBAR */
+.navbar ul {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    color: #1c2d66;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    cursor: pointer; /* porque sí deben ser clickeables */
+}
+
+.navbar a:hover {
+    color: #0074ff;
+}
+
+/* CONTENIDO PRINCIPAL */
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    flex: 1;
+}
+
+/* CARDS */
+.cards-nav ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    padding: 0 20px;
+}
+
+.cards-nav a {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.cards-nav img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    filter: brightness(70%);
+    transition: .5s;
+}
+
+.cards-nav a:hover img {
+    transform: scale(1.07);
+    filter: brightness(90%);
+}
+
+.cards-nav h2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 12px 25px;
+    border-radius: 12px;
+    color: #1c2d66;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+/* FOOTER */
+.footer {
+    background-color: #cfcfcf;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-redes {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-redes img {
+    width: 40px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.footer-redes img:hover {
+    transform: scale(1.15);
+    opacity: 0.8;
+}

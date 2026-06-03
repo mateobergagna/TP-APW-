@@ -1,0 +1,73 @@
+/* ====== NAV DE TARJETAS - AJUSTE FINAL ====== */
+.cards-nav ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    padding: 0 20px;
+}
+
+.cards-nav a {
+    display: block;
+    position: relative;
+    text-decoration: none;
+    overflow: hidden;
+    border-radius: 12px;
+    
+    /* MODIFICACIONES CLAVE: Aumentamos ligeramente el tamaño */
+    max-width: 400px; /* Aumentado de 380px a 400px */
+    width: 100%;
+    
+    height: 600px; /* Aumentado de 480px a 600px para más presencia */
+}
+
+.cards-nav img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(65%);
+    transition: 0.3s ease;
+    border-radius: 12px;
+}
+
+.cards-nav a:hover img {
+    transform: scale(1.05);
+    filter: brightness(85%);
+}
+
+.cards-nav h2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #1c2d66;
+    font-size: 1.4rem;
+    font-weight: 700;
+    white-space: nowrap; 
+}
+
+/* ====== RESPONSIVE - CORREGIDO ====== */
+@media (max-width: 1200px) {
+    /* Esto ayuda a que el main no fuerce el contenido a ser más grande de lo necesario */
+    main {
+        padding: 40px 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* En tabletas y móviles, las tarjetas se apilan */
+    .cards-nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; /* Menos espacio entre ellas al estar apiladas */
+        padding: 0;
+    }
+
+    .cards-nav a {
+        width: 90%; /* Usan casi todo el ancho disponible */
+        max-width: none; /* Quitamos el max-width para que se adapte al 90% */
+        height: 260px; /* Reducimos mucho la altura en móvil */
+    }
+}

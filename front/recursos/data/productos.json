@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "imagen": "./recursos/marshall-puas.jpeg",
+        "nombre": "Porta púas Marshall",
+        "precio": 8000
+    },
+    {
+        "id": 2,
+        "imagen": "./recursos/catalogo.jpeg",
+        "nombre": "Llaveros",
+        "precio": 2000
+    },
+    {
+        "id": 3,
+        "imagen": "./recursos/notebook-soporte.jpeg",
+        "nombre": "Soporte para Notebook",
+        "precio": 10000
+    },
+    {
+        "id": 4,
+        "imagen": "./recursos/soporte-auricular.jpeg",
+        "nombre": "Soporte para Auriculares",
+        "precio": 4500
+    },
+    {
+        "id": 5,
+        "imagen": "./recursos/macetas.jpeg",
+        "nombre": "Macetas",
+        "precio": 8000
+    },
+    {
+        "id": 6,
+        "imagen": "./recursos/marca-pagina.jpeg",
+        "nombre": "Marcapáginas",
+        "precio": 2000
+    },
+    {
+        "id": 7,
+        "imagen": "./recursos/medalla-basket.jpeg",
+        "nombre": "Medallas",
+        "precio": 2000
+    },
+    {
+        "id": 8,
+        "imagen": "./recursos/juego-de-mesa.jpeg",
+        "nombre": "Juego de Mesa",
+        "precio": 8000
+    }
+]
