@@ -1,7 +1,7 @@
 /* CONTENEDOR PRINCIPAL */
 .contenedor-servicio {
     /* Reducimos el max-width para que el contenido no se estire demasiado en pantallas gigantes */
-    max-width: 1100px; 
+    max-width: 1100px;
     /* El margen está bien */
     margin: 65px auto;
     display: flex;
@@ -9,17 +9,18 @@
     justify-content: space-between;
     background-color: #fff;
     /* Reducimos el border-radius para un look más moderno y controlable */
-    border-radius: 20px; 
+    border-radius: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-    overflow: hidden; /* CLAVE: Asegura que todo el contenido (incluyendo la imagen) respete el border-radius */
+    overflow: hidden;
+    /* CLAVE: Asegura que todo el contenido (incluyendo la imagen) respete el border-radius */
 }
 
 /* Imagen de la izquierda */
 .imagen-servicio {
     /* CORRECCIÓN: Ajustamos el ancho a 40% o 45% para dar más espacio al texto */
-    width: 45%; 
+    width: 45%;
     /* CLAVE: Necesitas asegurar que la imagen ocupe la altura disponible */
-    min-height: 450px; 
+    min-height: 450px;
 }
 
 .imagen-servicio img {
@@ -28,13 +29,13 @@
     object-fit: cover;
     height: 100%;
     /* Truco para que la esquina superior izquierda de la imagen se redondee */
-    border-radius: 20px 0 0 20px; 
+    border-radius: 20px 0 0 20px;
 }
 
 /* Texto de la derecha */
 .texto-servicio {
     /* CORRECCIÓN: Ajustamos el ancho para que sume 100% con la imagen */
-    width: 55%; 
+    width: 55%;
     padding: 40px;
 }
 
@@ -61,7 +62,7 @@
 
 .servicio ul {
     /* Eliminamos el margin-left que pusiste para usar padding */
-    padding-left: 20px; 
+    padding-left: 20px;
     line-height: 1.5;
     /* Usamos list-style-type para que se vean los puntos (si no están ya en global.css) */
     list-style-type: disc;
@@ -73,14 +74,16 @@
         flex-direction: column;
         /* Reducimos el border-radius en móvil */
         border-radius: 12px;
-        margin: 40px 10px; /* Margen horizontal en móvil */
+        margin: 40px 10px;
+        /* Margen horizontal en móvil */
     }
 
     .imagen-servicio,
     .texto-servicio {
         /* Vuelven a usar el 100% del ancho */
         width: 100%;
-        min-height: initial; /* Quitamos la altura mínima forzada */
+        min-height: initial;
+        /* Quitamos la altura mínima forzada */
     }
 
     .imagen-servicio img {

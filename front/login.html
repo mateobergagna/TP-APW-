@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso - Tienda 3D</title>
+    <!-- Estilos globales respetando la regla -->
+    <link rel="stylesheet" href="./css/global.css">
+    <!-- Estilos específicos de login -->
+    <link rel="stylesheet" href="./css/login.css">
+    <!-- Fuentes modernas para un look premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <img src="recursos/logo.jpeg" alt="Logo" class="header-logo" onerror="this.src='https://via.placeholder.com/55'">
+        <h1 class="header-title">Tienda 3D - Acceso</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="login-main">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2 id="form-title">Iniciar Sesión</h2>
+                    <p id="form-subtitle">Bienvenido de nuevo, por favor ingresa tus datos.</p>
+                </div>
+
+                <!-- Contenedor para mensajes DOM (Toasts/Alerts) sin redirigir -->
+                <div id="alert-container" class="alert-container hidden"></div>
+
+                <form id="auth-form" class="auth-form">
+                    <div class="input-group">
+                        <label for="username">Usuario</label>
+                        <input type="text" id="username" name="username" placeholder="Tu nombre de usuario" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submit-btn">Ingresar</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p id="toggle-text">¿No tienes cuenta? <span id="toggle-form" class="toggle-link">Regístrate aquí</span></p>
+                </div>
+                
+                <!-- Botón oculto para ir al panel (se muestra tras login exitoso) -->
+                <a href="admin.html" id="admin-link" class="btn-secondary hidden" style="margin-top: 15px; text-align: center; display: none;">Ir al Panel de Administración</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-redes">
+            <p style="color: #666;">Tienda 3D &copy; 2026</p>
+        </div>
+    </footer>
+
+    <!-- Lógica de autenticación (Fetch API y manipulación del DOM) -->
+    <script>
+        let isLogin = true;
+
+        const formTitle = document.getElementById('form-title');
+        const formSubtitle = document.getElementById('form-subtitle');
+        const toggleText = document.getElementById('toggle-text');
+        const toggleFormBtn = document.getElementById('toggle-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const authForm = document.getElementById('auth-form');
+        const alertContainer = document.getElementById('alert-container');
+        const adminLink = document.getElementById('admin-link');
+
+        // Función para mostrar alertas en el DOM
+        function showAlert(message, type) {
+            alertContainer.textContent = message;
+            alertContainer.className = `alert-container alert-${type}`;
+            alertContainer.classList.remove('hidden');
+            
+            // Animación de entrada
+            alertContainer.style.opacity = '0';
+            alertContainer.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                alertContainer.style.transition = 'all 0.3s ease';
+                alertContainer.style.opacity = '1';
+                alertContainer.style.transform = 'translateY(0)';
+            }, 10);
+
+            // Ocultar después de 4 segundos
+            setTimeout(() => {
+                alertContainer.style.opacity = '0';
+                setTimeout(() => alertContainer.classList.add('hidden'), 300);
+            }, 4000);
+        }
+
+        // Alternar entre Login y Registro
+        toggleFormBtn.addEventListener('click', () => {
+            isLogin = !isLogin;
+            if (isLogin) {
+                formTitle.textContent = 'Iniciar Sesión';
+                formSubtitle.textContent = 'Bienvenido de nuevo, por favor ingresa tus datos.';
+                submitBtn.textContent = 'Ingresar';
+                toggleText.innerHTML = '¿No tienes cuenta? <span id="toggle-form" class="toggle-link">Regístrate aquí</span>';
+            } else {
+                formTitle.textContent = 'Crear Cuenta';
+                formSubtitle.textContent = 'Regístrate para gestionar el catálogo.';
+                submitBtn.textContent = 'Registrarse';
+                toggleText.innerHTML = '¿Ya tienes cuenta? <span id="toggle-form" class="toggle-link">Inicia sesión aquí</span>';
+            }
+            
+            // Re-asignar el evento al nuevo toggle link creado por innerHTML
+            document.getElementById('toggle-form').addEventListener('click', toggleFormBtn.onclick);
+            alertContainer.classList.add('hidden');
+        });
+
+        // Manejar el submit del formulario sin redirigir
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (!username || !password) {
+                showAlert('Por favor completa todos los campos', 'error');
+                return;
+            }
+
+            const endpoint = isLogin ? '/api/v1/auth/login' : '/api/v1/auth/registro';
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Cargando...';
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.error || 'Error en la autenticación');
+                }
+
+                showAlert(data.mensaje || 'Operación exitosa', 'success');
+                authForm.reset();
+
+                if (isLogin) {
+                    // Si el login es exitoso, mostrar el botón para ir al admin sin forzar redirección
+                    adminLink.style.display = 'block';
+                    adminLink.classList.remove('hidden');
+                    authForm.style.display = 'none';
+                    formSubtitle.textContent = 'Has iniciado sesión correctamente.';
+                } else {
+                    // Si es registro, pasamos al form de login automáticamente
+                    setTimeout(() => document.getElementById('toggle-form').click(), 1500);
+                }
+
+            } catch (err) {
+                showAlert(err.message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                if(authForm.style.display !== 'none') {
+                    submitBtn.textContent = isLogin ? 'Ingresar' : 'Registrarse';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
